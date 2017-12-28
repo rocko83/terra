@@ -5,3 +5,5 @@ lib
 share
 bootstrap/
 connectedin/
+terra/db.sqlite3
+terra/db.sqlite3.bkp

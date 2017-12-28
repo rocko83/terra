@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^projects/create/(?P<cloud_id>\d+)/region/(?P<cloud_region>[\w\-]+)/$', create_project_region, name='create_project_region'),
     url(r'^projects/find/$', project, name='project'),
     #url(r'^perfis/(?P<perfil_id>\d+)/convidar$', views.convidar, name='convidar'),
-    # url(r'^convite/(?P<convite_id>\d+)/aceitar$', views.aceitar, name='aceitar')
+    #url(r'^convite/(?P<convite_id>\d+)/aceitar$', views.aceitar, name='aceitar')
 ]
 '''handler404 = handler404
 handler500 = handler500'''
