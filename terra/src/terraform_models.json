@@ -1,0 +1,12 @@
+{
+	"azure": {
+		"disktype": ["Standard_LRS"],
+		"ostype": ["linux", "Windows"],
+		"diskcache": ["ReadWrite", "Read", "None"],
+		"authentication": {
+			"user": "username",
+			"passwd": "password"
+		},
+		"tags": ["Ambiente", "Sistema", "CC", "Solicitante", "Projeto", "Validade"]
+	}
+}

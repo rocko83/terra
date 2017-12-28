@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+<!--
+{{ projects.nome }} <br>
+{{project_id}}
+{% for names in projects %}
+{{ names.nome }}
+ {% endfor %}<br> -->
+  <div class="container-fluid">
+    <ul class="nav nav-tabs">
+      <li {% if submenu == "find" %}
+                class="active"
+                {% endif %}>
+        <a href="/projects/find/" data-toggle='tooltip' data-placement='bottom' title='Find'> <span class='glyphicon glyphicon-search'></span> </a>
+      </li>
+        <li {% if submenu == "create" %}
+                class="active"
+                {% endif %}>
+        <a href="/projects/create/" data-toggle='tooltip' data-placement='bottom' title='Create'> <span class='glyphicon glyphicon-plus'></span> </a>
+      </li>
+      <li {% if submenu == "edit" %}
+                class="active"
+                {% endif %}>
+        <a href="/projects/edit/" data-toggle='tooltip' data-placement='bottom' title='Edit'> <span class='glyphicon glyphicon-pencil'></span>  </a>
+      </li>
+
+      <li {% if submenu == "delete" %}
+                class="active"
+                {% endif %}>
+        <a href="/projects/delete/" data-toggle='tooltip' data-placement='bottom' title='Delete'><span class='glyphicon glyphicon-trash'></span></a>
+      </li>
+
+    </ul>
+    <br>
+  </div>
+{% if submenu == "find" %}
+<form action="form aqui" method="post">
+      <div class="container">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search project" name="SEARCH_PROJECT">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">SEARCH</button>
+          </span>
+        </div><!-- /input-group -->
+      </div>
+{% endif %}
+{% if submenu == "create" %}
+    {% if cloud_id %}
+        {% if cloud_id == "2" %}
+            {% if cloud_region %}
+                <div class="alert alert-info" role="alert"> Please, configure your project.</div>
+            {% else %}
+                <div class="alert alert-info" role="alert"> Select region for deployment.</div>
+                <table class="table">
+                <tbody>
+                {% for region in regions %}
+                    <tr>
+                        <td><a href="/projects/create/{{cloud_id}}/region/{{region.1}}/">{{region.0}}</a></td>
+                     </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            {% endif %}
+        {% else %}
+    <div class="alert alert-danger" role="alert"> Automation for this cloud provider is not available yet. Click <a href="javascript:history.back()" class="alert-link">here</a> to come back.</div>
+    {% endif %}
+{% else %}
+<table class="table">
+  <tbody>
+    <tr>
+      <td><a href="/projects/create/1"><img src="{% static "logos/aws.png" %}" alt="AWS"  style="width:300px;height:140px;"/></a></td>
+      <td><a href="/projects/create/2"><img src="{% static "logos/Azure.png" %}" alt="AZURE"  style="width:300px;height:200px;"/></a></td>
+      <td><a href="/projects/create/3"><img src="{% static "logos/google.png" %}" alt="AZURE"  style="width:300px;height:100px;"/></a></td>
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+{% endif %}
+{% if submenu == "delete" %}
+<form action="form aqui" method="post">
+      <div class="container">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Delete project" name="DELETE_PROJECT">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">DELETE</button>
+          </span>
+        </div><!-- /input-group -->
+      </div>
+{% endif %}
+{% endblock %}
