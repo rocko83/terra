@@ -4,3 +4,5 @@ import src.azure
 class Projects(models.Model):
     name = models.CharField(max_length=255, null=False)
     filedata = models.CharField(max_length=255, null=True)
+    creation = models.DateField()
+    cloud_id = models.IntegerField()
