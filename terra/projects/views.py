@@ -104,17 +104,18 @@ def get_form_create(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = NameForm(request.POST)
-
-        print(form.data['projectname'])
-        print(form.data['resourcegroup'])
-        print(form.data['subnet'])
-        print(form.data['vmimage'])
-        print(form.data['vmsize'])
-        print(form.data['disktype'])
-        print(form.data['vmtag'])
-        print(form.data['ostype'])
-        print(form.data['username'])
-        print(form.data['password'])
+        # check whether it's valid:
+        if form.is_valid():
+            print(form.cleaned_data['projectname'])
+            print(form.cleaned_data['resourcegroup'])
+            print(form.cleaned_data['subnet'])
+            print(form.cleaned_data['vmimage'])
+            print(form.cleaned_data['vmsize'])
+            print(form.cleaned_data['disktype'])
+            print(form.cleaned_data['vmtag'])
+            print(form.cleaned_data['ostype'])
+            print(form.cleaned_data['username'])
+            print(form.cleaned_data['password'])
         return render(request, 'teste.html', {'form': form})
 
 def get_form_create2(request):
