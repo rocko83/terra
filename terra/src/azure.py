@@ -40,42 +40,49 @@ class Azclass:
             print("Fail to get list of resource groups")
             return False
 
-    def getVnet(self):
+    def getVnet(self,region):
         try:
             vnets = azurerm.list_vnets(self.access_token, self.subscription)
             array = []
             for vnet in vnets['value']:
-                for subnet in vnet['properties']['subnets']:
-                    #print(subnet['name'] + ', ' + vnet['name'] + ', vnetLocation=' + vnet['location'] + ', ' +
-                    #      subnet['properties']['addressPrefix'] + ', ' + subnet['properties']['provisioningState'])
-                    array2 = []
-                    array2.append(subnet['name'])
-                    array2.append(vnet['name'])
-                    array2.append(vnet['location'])
-                    array2.append(subnet['properties']['addressPrefix'])
-                    array2.append(subnet['properties']['provisioningState'])
-                    array2.append(subnet['id'])
-                    array.append(array2)
+                if vnet['location'] != region:
+                    continue
+                else:
+                    for subnet in vnet['properties']['subnets']:
+                        #print(subnet['name'] + ', ' + vnet['name'] + ', vnetLocation=' + vnet['location'] + ', ' +
+                        #      subnet['properties']['addressPrefix'] + ', ' + subnet['properties']['provisioningState'])
+                        array2 = []
+                        array2.append(subnet['name'])
+                        array2.append(vnet['name'])
+                        array2.append(vnet['location'])
+                        array2.append(subnet['properties']['addressPrefix'])
+                        array2.append(subnet['properties']['provisioningState'])
+                        array2.append(subnet['id'])
+                        array.append(array2)
             return array
 
         except ValueError:
             print("Fail to get Vnet list")
             return False
-    def getImage(self):
+    def getImage(self,region):
         try:
             images = azurerm.list_vm_images_sub(self.access_token, self.subscription)
             array = []
+
             for image in images['value']:
-                #print(image['name'] + ', ' + image['location'] + ', ' + str(
-                #    image['properties']['storageProfile']['osDisk']['diskSizeGB']) + ', ' +
-                #      image['properties']['storageProfile']['osDisk']['storageAccountType'])
-                array2 = []
-                array2.append(image['name'])
-                array2.append(image['location'])
-                array2.append(image['properties']['storageProfile']['osDisk']['diskSizeGB'])
-                array2.append(image['properties']['storageProfile']['osDisk']['storageAccountType'])
-                array2.append(image['id'])
-                array.append(array2)
+                if image['location'] != region:
+                    continue
+                else:
+                    #print(image['name'] + ', ' + image['location'] + ', ' + str(
+                    #    image['properties']['storageProfile']['osDisk']['diskSizeGB']) + ', ' +
+                    #      image['properties']['storageProfile']['osDisk']['storageAccountType'])
+                    array2 = []
+                    array2.append(image['name'])
+                    array2.append(image['location'])
+                    array2.append(image['properties']['storageProfile']['osDisk']['diskSizeGB'])
+                    array2.append(image['properties']['storageProfile']['osDisk']['storageAccountType'])
+                    array2.append(image['id'])
+                    array.append(array2)
             return array
 
         except ValueError:
