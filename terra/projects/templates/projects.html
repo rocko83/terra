@@ -2,378 +2,542 @@
 {% block body %}
 {% load static %}
 <!--
-{{ projects.nome }} <br>
-{{project_id}}
-{% for names in projects %}
-{{ names.nome }}
- {% endfor %}<br> -->
-  <div class="container-fluid">
+    {{ projects.nome }} <br>
+    {{project_id}}
+    {% for names in projects %}
+    {{ names.nome }}
+     {% endfor %}<br> -->
+<div class="container-fluid">
     <ul class="nav nav-tabs">
-      <li {% if submenu == "find" %}
-                class="active"
-                {% endif %}>
+        <li {% if submenu == "find" %}
+        class="active"
+        {% endif %}>
         <a href="/projects/find/" data-toggle='tooltip' data-placement='bottom' title='Find'> <span class='glyphicon glyphicon-search'></span> </a>
-      </li>
+        </li>
         <li {% if submenu == "create" %}
-                class="active"
-                {% endif %}>
+        class="active"
+        {% endif %}>
         <a href="/projects/create/" data-toggle='tooltip' data-placement='bottom' title='Create'> <span class='glyphicon glyphicon-plus'></span> </a>
-      </li>
-      <li {% if submenu == "edit" %}
-                class="active"
-                {% endif %}>
+        </li>
+        <li {% if submenu == "edit" %}
+        class="active"
+        {% endif %}>
         <a href="/projects/edit/" data-toggle='tooltip' data-placement='bottom' title='Edit'> <span class='glyphicon glyphicon-pencil'></span>  </a>
-      </li>
-
-      <li {% if submenu == "delete" %}
-                class="active"
-                {% endif %}>
+        </li>
+        <li {% if submenu == "delete" %}
+        class="active"
+        {% endif %}>
         <a href="/projects/delete/" data-toggle='tooltip' data-placement='bottom' title='Delete'><span class='glyphicon glyphicon-trash'></span></a>
-      </li>
-
+        </li>
     </ul>
     <br>
-  </div>
+</div>
 {% if submenu == "find" %}
 <form action="form aqui" method="post">
-      <div class="container">
+    <div class="container">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search project" name="SEARCH_PROJECT">
-          <span class="input-group-btn">
+            <input type="text" class="form-control" placeholder="Search project" name="SEARCH_PROJECT">
+            <span class="input-group-btn">
             <button class="btn btn-default" type="button">SEARCH</button>
-          </span>
-        </div><!-- /input-group -->
-      </div>
-{% endif %}
-{% if submenu == "create" %}
-    {% if cloud_id %}
-        {% if cloud_id == "2" %}
-            {% if cloud_region %}
-
-                <div class="alert alert-info" role="alert"> Please, configure your project.</div>
-
-                <form form action="/projects/create/form" method="post">
-                    {% csrf_token %}
-                    <p class="h2">Give a name to this project</p>
-                    <div class="form-group">
-                    <label for="projectname">Project Name</label>
-                    <input type="text" class="form-control" id="projectname"  placeholder="User Name">
-                  </div>
-                    <p class="h2">Select Resource Group</p>
-                <div class="form-group">
-                    <label for="resourcegroup">Resource Group</label>
-                    <select class="form-control" id="resourcegroup">
-                        {% for rg in rgs %}
-                            <option>{{ rg.0 }}</option>
-                        {% endfor %}
-
-
-                    </select>
-                  </div>
-                    <p class="h2">Select SubNet</p>
-                <table class="table table-striped table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">Subnet</th>
-                      <th scope="col">VNet</th>
-                      <th scope="col">Scope</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {% for vnet in vnets %}
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="subnet" id="subnet" value="{{ vnet.5 }}">
-                          <label class="form-check-label" for="subnet">
-                            {{ vnet.0 }}
-                          </label>
-                        </div>
-                      </td>
-                      <td>{{ vnet.1 }}</td>
-                      <td>{{ vnet.3 }}</td>
-                    </tr>
-                  {% endfor %}
-                  </tbody>
-                </table>
-                    <p class="h2">Select VM Image</p>
-                <table class="table table-striped table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">Image</th>
-                      <th scope="col">Size (GB)</th>
-                      <th scope="col">DiskType</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {% for image in images %}
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="vmimage" id="vmimage" value="{{ image.4 }}">
-                          <label class="form-check-label" for="vmimage">
-                            {{ image.0 }}
-                          </label>
-                        </div>
-                      </td>
-                      <td>{{ image.2 }}</td>
-                      <td>{{ image.3 }}</td>
-                    </tr>
-                  {% endfor %}
-                  </tbody>
-                </table>
-                    <p class="h2">Select VM Size</p>
-                <table class="table table-striped table-dark">
-                  <thead>
-                    <tr>
-                      <th scope="col">VM Size Name</th>
-                      <th scope="col">Memory (MB)</th>
-                      <th scope="col">Number of CPUs</th>
-                      <th scope="col">Resource Disk Size (MB)</th>
-                      <th scope="col">Max disk count</th>
-                      <th scope="col">OS Disk size (MB)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {% for vmsize in vmsizes %}
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="vmsize" id="vmsize" value="{{ vmsize.2 }}">
-                          <label class="form-check-label" for="vmsize">
-                            {{ vmsize.2 }}
-                          </label>
-                        </div>
-                      </td>
-                      <td>{{ vmsize.0 }}</td>
-                      <td>{{ vmsize.5 }}</td>
-                      <td>{{ vmsize.3 }}</td>
-                      <td>{{ vmsize.1 }}</td>
-                      <td>{{ vmsize.4 }}</td>
-                    </tr>
-                  {% endfor %}
-                  </tbody>
-                </table>
-                <p class="h2">Select Disk Type</p>
-                <div class="form-group">
-                    <label for="disktype">Disk Type</label>
-                    <select class="form-control" id="disktype">
-                        {% for disktype in disktypes %}
-                            <option>{{ disktype }}</option>
-                        {% endfor %}
-
-
-                    </select>
-                </div>
-                <p class="h2">Fill TAG Names</p>
-                {% for vmtag in vmtags %}
-                    <div class="form-group">
-                        <label for="{{ vmtag }}">Give a name for the tag "{{ vmtag }}"</label>
-                        <input type="text" class="form-control" id="{{ vmtag }}" aria-describedby="{{ vmtag }}" placeholder="{{ vmtag }}">
-
-                    </div>
-                {% endfor %}
-                <p class="h2">Select OS Type</p>
-                <div class="form-group">
-                    <label for="ostype">VM OS Type</label>
-                    <select class="form-control" id="ostype">
-                        {% for ostype in ostypes %}
-                            <option>{{ ostype }}</option>
-                        {% endfor %}
-
-
-                    </select>
-                </div>
-                <p class="h2">Fill administrator user credentials</p>
-                <div class="form-group">
-                    <label for="username">User Name</label>
-                    <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="User Name">
-                  </div>
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-                <p class="h2">Select Disk Cache</p>
-                <div class="form-group">
-                    <label for="disktype">Disk Cache</label>
-                    <select class="form-control" id="disktype">
-                        {% for diskcache in diskcaches %}
-                            <option>{{ diskcache }}</option>
-                        {% endfor %}
-
-
-                    </select>
-                </div>
-                <button type="submit" >Create</button>
-                </form>
-                <!--
-
-                Resource Group <br>
-                <table class="table">
-                <tbody>
-                {% for rg in rgs %}
-
-                    <tr>
-                        <td>{{ rg.0 }}</a></td>
-                        <td>{{ rg.1 }}</a></td>
-                        <td>{{ rg.2 }}</a></td>
-                    </tr>
-
-                {% endfor %}
-                </tbody>
-                </table>
-
-                Virtual Network <br>
-                <table class="table">
-                <tbody>
-                {% for vnet in vnets %}
-
-                    <tr>
-                        <td>{{ vnet.0 }}</a></td>
-                        <td>{{ vnet.1 }}</a></td>
-                        <td>{{ vnet.2 }}</a></td>
-                        <td>{{ vnet.3 }}</a></td>
-                        <td>{{ vnet.4 }}</a></td>
-                        <td>{{ vnet.5 }}</a></td>
-                    </tr>
-
-                {% endfor %}
-                </tbody>
-                </table>
-
-                Images <br>
-                <table class="table">
-                <tbody>
-                {% for image in images %}
-
-                    <tr>
-                        <td>{{ image.0 }}</a></td>
-                        <td>{{ image.1 }}</a></td>
-                        <td>{{ image.2 }}</a></td>
-                        <td>{{ image.3 }}</a></td>
-                        <td>{{ image.4 }}</a></td>
-                    </tr>
-
-                {% endfor %}
-                </tbody>
-                </table>
-
-                VM Sizes <br>
-                <table class="table">
-                <tbody>
-                {% for vmsize in vmsizes %}
-
-                    <tr>
-                        <td>{{ vmsize.0 }}</a></td>
-                        <td>{{ vmsize.1 }}</a></td>
-                        <td>{{ vmsize.2 }}</a></td>
-                        <td>{{ vmsize.3 }}</a></td>
-                        <td>{{ vmsize.4 }}</a></td>
-                        <td>{{ vmsize.5 }}</a></td>
-                    </tr>
-
-                {% endfor %}
-                </tbody>
-                </table>
-
-                Disk Types <br>
-                <table class="table">
-                <tbody>
-                {% for disktype in disktypes %}
-
-                    <tr>
-                        <td>{{ disktype }}</a></td>
-                    </tr>
-
-                {% endfor %}
-                </tbody>
-                </table>
-
-                VM Tags <br>
-                <table class="table">
-                <tbody>
-                {% for vmtag in vmtags %}
-
-                    <tr>
-                        <td>{{ vmtag }}</a></td>
-                    </tr>
-
-                {% endfor %}
-                </tbody>
-                </table>
-
-                VM OS Type <br>
-                <table class="table">
-                <tbody>
-                {% for ostype in ostypes %}
-
-                    <tr>
-                        <td>{{ ostype }}</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                </table>
-
-                Autentications  <br>
-                <table class="table">
-                <tbody>
-                {% for auth in auths %}
-
-                    <tr>
-                        <td>{{ auth }}</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                </table>
-
-                Disk cache  <br>
-                <table class="table">
-                <tbody>
-                {% for diskcache in diskcaches %}
-
-                    <tr>
-                        <td>{{ diskcache }}</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                </table>
-                -->
-            {% else %}
-                <div class="alert alert-info" role="alert"> Select region for deployment.</div>
-                <table class="table">
-                <tbody>
-                {% for region in regions %}
-                    <tr>
-                        <td><a href="/projects/create/{{cloud_id}}/region/{{region.1}}/">{{region.0}}</a></td>
-                     </tr>
-                {% endfor %}
-                </tbody>
-                </table>
-            {% endif %}
-        {% else %}
-    <div class="alert alert-danger" role="alert"> Automation for this cloud provider is not available yet. Click <a href="javascript:history.back()" class="alert-link">here</a> to come back.</div>
+            </span>
+        </div>
+        <!-- /input-group -->
+    </div>
     {% endif %}
+    {% if submenu == "create" %}
+    {% if cloud_id %}
+    {% if cloud_id == "2" %}
+    {% if cloud_region %}
+    <div class="alert alert-info" role="alert"> Please, configure your project.</div>
+    <form action="/projects/create/form" method="post">
+        {% csrf_token %}
+        <p class="h4">Project Name</p>
+        <input type="text" name="projectname"><br>
+        <p class="h4">User Name</p>
+        <input type="text" name="username"><br>
+        <p class="h4">User Password</p>
+        <input type="text" name="userpassword"><br>
+        <p class="h4">Fill TAG Names</p>
+        {% for vmtag in vmtags %}
+        <p class="h5">Give a name for the tag "{{ vmtag }}"</p>
+        <input type="text" name="{{ vmtag }}"><br>
+        {% endfor %}
+        <p class="h4">Select Resource Group</p>
+        <select name="resourcegroup">
+            {% for rg in rgs %}
+            <option value="{{ rg.0 }}">{{ rg.0 }}</option>
+            {% endfor %}
+        </select>
+        <p class="h4">Select Subnet</p>
+        <table class="table table-striped table-hover table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>Subnet</th>
+                    <th>VNet</th>
+                    <th>Scope</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vnet in vnets %}
+                    <tr>
+                        <th><input type="radio" name="subnet" value="{{ vnet.5 }}" checked>{{ vnet.0 }}<br></th>
+                        <th>{{ vnet.1 }}</th>
+                        <th>{{ vnet.3 }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="h4">Select VM Image</p>
+        <table class="table table-striped table-hover table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Size (GB)</th>
+                    <th>DiskType</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for image in images %}
+                    <tr>
+                        <th><input type="radio" name="vmimage" value="{{ image.4 }}" checked>{{ image.0 }}<br></th>
+                        <th>{{ image.2 }}</th>
+                        <th>{{ image.3 }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-striped table-hover table-condensed table-responsive">
+            <thead>
+            <tr>
+                <th><p class="h4">Select Cache Disk Type</p></th>
+                <th><p class="h4">Select OS Type</p></th>
+                <th><p class="h4">Select Disk Type</p></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>
+                    <select name="disktype">
+                        {% for diskcache in diskcaches %}
+                        <option value="{{ diskcache }}">{{ diskcache }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th>
+                    <select name="ostype">
+                        {% for ostype in ostypes %}
+                        <option value="{{ ostype }}">{{ ostype }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th>
+                    <select name="disktype">
+                        {{% for disktype in disktypes %}
+                        <option value="{{ disktype }}">{{ disktype }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+
+        <p class="h4">Select VM Size</p>
+        <table class="table table-striped table-hover table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>VM Size Name</th>
+                    <th>Memory (MB)</th>
+                    <th>Number of CPUs</th>
+                    <th>Resource Disk Size (MB)</th>
+                    <th>Max disk count</th>
+                    <th>OS Disk size (MB)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vmsize in vmsizes %}
+                    <tr>
+                        <th><input type="radio" name="vmsize" value="{{ vmsize.2 }}" checked>{{ vmsize.2 }}<br></th>
+                        <th>{{ vmsize.0 }}</th>
+                        <th>{{ vmsize.5 }}</th>
+                        <th>{{ vmsize.3 }}</th>
+                        <th>{{ vmsize.1 }}</th>
+                        <th>{{ vmsize.4 }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        <br>
+        <!--<input type="submit">-->
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Create</button>
+    </form>
+
+<!--
+
+    <div class="alert alert-info" role="alert"> Please, configure your project.</div>
+<form action="/projects/create/form" method="post" role="form">
+    {% csrf_token %}
+    <p class="h2">Give a name to this project</p>
+    <div class="form-group">
+        <label for="projectname">Project Name</label>
+        <input type="text" class="form-control" id="projectname"  placeholder="Project Name">
+    </div>
+    <p class="h2">Fill administrator user credentials</p>
+    <div class="form-group">
+        <label for="username">User Name</label>
+        <input type="text" class="form-control" id="username" aria-describedby="username" placeholder="User Name">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password">
+    </div>
+    <p class="h2">Fill TAG Names</p>
+    {% for vmtag in vmtags %}
+    <div class="form-group">
+        <label for="{{ vmtag }}">Give a name for the tag "{{ vmtag }}"</label>
+        <input type="text" class="form-control" id="{{ vmtag }}" aria-describedby="{{ vmtag }}" placeholder="{{ vmtag }}">
+    </div>
+    {% endfor %}
+    <p class="h2">Select Resource Group</p>
+    <div class="form-group">
+        <label for="resourcegroup">Resource Group</label>
+        <select class="form-control" id="resourcegroup">
+            {% for rg in rgs %}
+            <option>{{ rg.0 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <p class="h2">Select SubNet</p>
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Subnet</th>
+                <th scope="col">VNet</th>
+                <th scope="col">Scope</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vnet in vnets %}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="subnet" id="subnet" value="{{ vnet.5 }}">
+                        <label class="form-check-label" for="subnet">
+                        {{ vnet.0 }}
+                        </label>
+                    </div>
+                </td>
+                <td>{{ vnet.1 }}</td>
+                <td>{{ vnet.3 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p class="h2">Select VM Image</p>
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Size (GB)</th>
+                <th scope="col">DiskType</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for image in images %}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="vmimage" id="vmimage" value="{{ image.4 }}">
+                        <label class="form-check-label" for="vmimage">
+                        {{ image.0 }}
+                        </label>
+                    </div>
+                </td>
+                <td>{{ image.2 }}</td>
+                <td>{{ image.3 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p class="h2">Select Disk Cache</p>
+    <div class="form-group">
+        <label for="disktype">Disk Cache</label>
+        <select class="form-control" id="disktype">
+            {% for diskcache in diskcaches %}
+            <option>{{ diskcache }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <p class="h2">Select OS Type</p>
+    <div class="form-group">
+        <label for="ostype">VM OS Type</label>
+        <select class="form-control" id="ostype">
+            {% for ostype in ostypes %}
+            <option>{{ ostype }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <p class="h2">Select Disk Type</p>
+    <div class="form-group">
+        <label for="disktype">Disk Type</label>
+        <select class="form-control" id="disktype">
+            {% for disktype in disktypes %}
+            <option>{{ disktype }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <p class="h2">Select VM Size</p>
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">VM Size Name</th>
+                <th scope="col">Memory (MB)</th>
+                <th scope="col">Number of CPUs</th>
+                <th scope="col">Resource Disk Size (MB)</th>
+                <th scope="col">Max disk count</th>
+                <th scope="col">OS Disk size (MB)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vmsize in vmsizes %}
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="vmsize" id="vmsize" value="{{ vmsize.2 }}">
+                        <label class="form-check-label" for="vmsize" rows="10">
+                        {{ vmsize.2 }}
+                        </label>
+                    </div>
+                </td>
+                <td>{{ vmsize.0 }}</td>
+                <td>{{ vmsize.5 }}</td>
+                <td>{{ vmsize.3 }}</td>
+                <td>{{ vmsize.1 }}</td>
+                <td>{{ vmsize.4 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Create</button>
+</form>
+
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="projectname">Project Name</label>
+          <input type="text" class="form-control" id="projectname" placeholder="Project Name">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="username">User Name</label>
+        <input type="text" class="form-control" id="username" placeholder="User Name">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="userpassword">Password</label>
+          <input type="password" class="form-control" id="userpassword" placeholder="Password">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputCity">City</label>
+          <input type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputState">State</label>
+          <select id="inputState" class="form-control">
+            <option selected>Choose...</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputZip">Zip</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck">
+          <label class="form-check-label" for="gridCheck">
+            Check me out
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+
+    Resource Group <br>
+    <table class="table">
+    <tbody>
+    {% for rg in rgs %}
+
+        <tr>
+            <td>{{ rg.0 }}</a></td>
+            <td>{{ rg.1 }}</a></td>
+            <td>{{ rg.2 }}</a></td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+    </table>
+
+    Virtual Network <br>
+    <table class="table">
+    <tbody>
+    {% for vnet in vnets %}
+
+        <tr>
+            <td>{{ vnet.0 }}</a></td>
+            <td>{{ vnet.1 }}</a></td>
+            <td>{{ vnet.2 }}</a></td>
+            <td>{{ vnet.3 }}</a></td>
+            <td>{{ vnet.4 }}</a></td>
+            <td>{{ vnet.5 }}</a></td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+    </table>
+
+    Images <br>
+    <table class="table">
+    <tbody>
+    {% for image in images %}
+
+        <tr>
+            <td>{{ image.0 }}</a></td>
+            <td>{{ image.1 }}</a></td>
+            <td>{{ image.2 }}</a></td>
+            <td>{{ image.3 }}</a></td>
+            <td>{{ image.4 }}</a></td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+    </table>
+
+    VM Sizes <br>
+    <table class="table">
+    <tbody>
+    {% for vmsize in vmsizes %}
+
+        <tr>
+            <td>{{ vmsize.0 }}</a></td>
+            <td>{{ vmsize.1 }}</a></td>
+            <td>{{ vmsize.2 }}</a></td>
+            <td>{{ vmsize.3 }}</a></td>
+            <td>{{ vmsize.4 }}</a></td>
+            <td>{{ vmsize.5 }}</a></td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+    </table>
+
+    Disk Types <br>
+    <table class="table">
+    <tbody>
+    {% for disktype in disktypes %}
+
+        <tr>
+            <td>{{ disktype }}</a></td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+    </table>
+
+    VM Tags <br>
+    <table class="table">
+    <tbody>
+    {% for vmtag in vmtags %}
+
+        <tr>
+            <td>{{ vmtag }}</a></td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+    </table>
+
+    VM OS Type <br>
+    <table class="table">
+    <tbody>
+    {% for ostype in ostypes %}
+
+        <tr>
+            <td>{{ ostype }}</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    Autentications  <br>
+    <table class="table">
+    <tbody>
+    {% for auth in auths %}
+
+        <tr>
+            <td>{{ auth }}</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    Disk cache  <br>
+    <table class="table">
+    <tbody>
+    {% for diskcache in diskcaches %}
+
+        <tr>
+            <td>{{ diskcache }}</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    -->
+{% else %}
+<div class="alert alert-info" role="alert"> Select region for deployment.</div>
+<table class="table">
+    <tbody>
+        {% for region in regions %}
+        <tr>
+            <td><a href="/projects/create/{{cloud_id}}/region/{{region.1}}/">{{region.0}}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% else %}
+<div class="alert alert-danger" role="alert"> Automation for this cloud provider is not available yet. Click <a href="javascript:history.back()" class="alert-link">here</a> to come back.</div>
+{% endif %}
 {% else %}
 <table class="table">
-  <tbody>
-    <tr>
-      <td><a href="/projects/create/1"><img src="{% static "logos/aws.png" %}" alt="AWS"  style="width:300px;height:140px;"/></a></td>
-      <td><a href="/projects/create/2"><img src="{% static "logos/Azure.png" %}" alt="AZURE"  style="width:300px;height:200px;"/></a></td>
-      <td><a href="/projects/create/3"><img src="{% static "logos/google.png" %}" alt="AZURE"  style="width:300px;height:100px;"/></a></td>
-    </tr>
-  </tbody>
+    <tbody>
+        <tr>
+            <td><a href="/projects/create/1"><img src="{% static "logos/aws.png" %}" alt="AWS"  style="width:300px;height:140px;"/></a></td>
+            <td><a href="/projects/create/2"><img src="{% static "logos/Azure.png" %}" alt="AZURE"  style="width:300px;height:200px;"/></a></td>
+            <td><a href="/projects/create/3"><img src="{% static "logos/google.png" %}" alt="AZURE"  style="width:300px;height:100px;"/></a></td>
+        </tr>
+    </tbody>
 </table>
 {% endif %}
 {% endif %}
 {% if submenu == "delete" %}
 <form action="form aqui" method="post">
-      <div class="container">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Delete project" name="DELETE_PROJECT">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button">DELETE</button>
-          </span>
-        </div><!-- /input-group -->
-      </div>
+<div class="container">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Delete project" name="DELETE_PROJECT">
+        <span class="input-group-btn">
+        <button class="btn btn-default" type="button">DELETE</button>
+        </span>
+    </div>
+    <!-- /input-group -->
+</div>
 {% endif %}
 {% endblock %}

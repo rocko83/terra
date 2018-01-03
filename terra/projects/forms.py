@@ -10,5 +10,5 @@ class NameForm(forms.Form):
     #vmtag = forms.CharField(label='VM Tag', max_length=50)
     ostype = forms.CharField(required=True)
     username = forms.CharField(required=True)
-    password = forms.CharField(required=True)
+    userpassword = forms.CharField(required=True)
 

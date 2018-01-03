@@ -106,17 +106,29 @@ def get_form_create(request):
         form = NameForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            print(form.cleaned_data['projectname'])
-            print(form.cleaned_data['resourcegroup'])
-            print(form.cleaned_data['subnet'])
-            print(form.cleaned_data['vmimage'])
-            print(form.cleaned_data['vmsize'])
-            print(form.cleaned_data['disktype'])
-            print(form.cleaned_data['vmtag'])
-            print(form.cleaned_data['ostype'])
-            print(form.cleaned_data['username'])
-            print(form.cleaned_data['password'])
-        return render(request, 'teste.html', {'form': form})
+            models = Config("/home/damato/projetos/git/rocko83/TerraStandard/terra/src/terraform_models.json")
+            credenciais = Config("/home/damato/projetos/dados.json")
+            az = Azclass(credenciais)
+            az.login()
+            retorno = az.getTags(models)
+            if retorno == False:
+                print("False")
+            else:
+                vmtags = retorno
+            formdata={}
+            formdata["projectname"] = form.cleaned_data['projectname']
+            formdata["resourcegroup"] = form.cleaned_data['resourcegroup']
+            formdata["subnet"] = form.cleaned_data['subnet']
+            formdata["vmimage"] = form.cleaned_data['vmimage']
+            formdata["vmsize"] = form.cleaned_data['vmsize']
+            formdata["disktype"] = form.cleaned_data['disktype']
+            formdata["ostype"] = form.cleaned_data['ostype']
+            formdata["username"] = form.cleaned_data['username']
+            formdata["userpassword"] = form.cleaned_data['userpassword']
+            for tag in vmtags:
+                print(form.cleaned_data['Ambiente'])
+                #formdata["tags"] = dict([(tag,form.cleaned_data[tag])])
+        return render(request, 'teste.html', {'form': formdata})
 
 def get_form_create2(request):
     # if this is a POST request we need to process the form data

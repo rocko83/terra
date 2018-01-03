@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% block body %}
 
-{{ form }}
+Project Name = {{ form.projectname }} <br>
+Resource Group = {{ form.resourcegroup }} <br>
+Subnet = {{ form.subnet }} <br>
+VM Image = {{ form.vmimage }} <br>
+VM Size = {{ form.vmsize }} <br>
+Disk Type = {{ form.disktype }} <br>
+OS Type = {{ form.ostype }} <br>
+User Name = {{ form.username }} <br>
+User Password = {{ form.userpassword }} <br>
 
 
 {% endblock %}
