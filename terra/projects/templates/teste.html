@@ -10,6 +10,7 @@ Disk Type = {{ form.disktype }} <br>
 OS Type = {{ form.ostype }} <br>
 User Name = {{ form.username }} <br>
 User Password = {{ form.userpassword }} <br>
-
-
+{% for tag, value in tags.items %}
+    {{ tag }} = {{ value }}<br>
+{% endfor %}
 {% endblock %}

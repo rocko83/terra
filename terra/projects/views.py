@@ -125,10 +125,11 @@ def get_form_create(request):
             formdata["ostype"] = form.cleaned_data['ostype']
             formdata["username"] = form.cleaned_data['username']
             formdata["userpassword"] = form.cleaned_data['userpassword']
+            tags={}
             for tag in vmtags:
-                print(form.cleaned_data['Ambiente'])
-                #formdata["tags"] = dict([(tag,form.cleaned_data[tag])])
-        return render(request, 'teste.html', {'form': formdata})
+                tags[tag] = form.data[tag]
+
+        return render(request, 'teste.html', {'form': formdata,'tags':tags})
 
 def get_form_create2(request):
     # if this is a POST request we need to process the form data
