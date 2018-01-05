@@ -17,9 +17,9 @@ def open_project(request,project_id):
 def index(request):
     #this.project_id = project_id
     return render(request,'index.html',{'menu':'home'})
-def create_project(request):
+def create_project_variables(request):
     #this.project_id = project_id
-    return render(request,'projects.html',{'menu':'project','submenu':'create'})
+    return render(request,'projects.html',{'menu':'project','submenu':'variables'})
 def project(request):
     #this.project_id = project_id
     return render(request,'projects.html',{'menu':'project','submenu':'find'})
@@ -29,17 +29,17 @@ def edit_project(request):
 def delete_project(request):
     #this.project_id = project_id
     return render(request,'projects.html',{'menu':'project','submenu':'delete'})
-def create_project_id(request,cloud_id):
+def create_project_id_variables(request,cloud_id):
     if cloud_id == "2":
         credenciais = Config("/home/damato/projetos/dados.json")
         az = Azclass(credenciais)
         az.login()
         retorno = az.getRegion()
-        return render(request,'projects.html',{'menu':'project','submenu':'create','cloud_id':cloud_id,'regions':retorno})
+        return render(request,'projects.html',{'menu':'project','submenu':'variables','cloud_id':cloud_id,'regions':retorno})
     else:
         return render(request, 'projects.html',
-                      {'menu': 'project', 'submenu': 'create', 'cloud_id': cloud_id})
-def create_project_region(request,cloud_id,cloud_region):
+                      {'menu': 'project', 'submenu': 'variables', 'cloud_id': cloud_id})
+def create_project_region_variables(request,cloud_id,cloud_region):
     if cloud_id == "2":
         models = Config("/home/damato/projetos/git/rocko83/TerraStandard/terra/src/terraform_models.json")
         credenciais = Config("/home/damato/projetos/dados.json")
@@ -92,14 +92,14 @@ def create_project_region(request,cloud_id,cloud_region):
             diskcaches = retorno
 
         return render(request, 'projects.html',
-                      {'menu': 'project', 'submenu': 'create', 'cloud_id': cloud_id, 'regions': retorno,
+                      {'menu': 'project', 'submenu': 'variables', 'cloud_id': cloud_id, 'regions': retorno,
                        'cloud_region': cloud_region,'rgs':rgs,'vnets':vnets,'images':images,'vmsizes':vmsizes,
                        'disktypes':disktypes,'vmtags':vmtags,'ostypes':ostypes,'auths':auths,'diskcaches':diskcaches})
     else:
         return render(request, 'projects.html',
-                      {'menu': 'project', 'submenu': 'create', 'cloud_id': cloud_id})
+                      {'menu': 'project', 'submenu': 'variables', 'cloud_id': cloud_id})
 
-def get_form_create(request):
+def get_form_create_variables(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:

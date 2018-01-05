@@ -167,5 +167,3 @@ class Azclass:
         except ValueError:
             print("Fail to get default credentials for virtual machine")
             return  False
-    def teste(self,config):
-        return  False

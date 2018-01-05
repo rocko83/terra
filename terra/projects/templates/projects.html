@@ -14,10 +14,10 @@
         {% endif %}>
         <a href="/projects/find/" data-toggle='tooltip' data-placement='bottom' title='Find'> <span class='glyphicon glyphicon-search'></span> </a>
         </li>
-        <li {% if submenu == "create" %}
+        <li {% if submenu == "variables" %}
         class="active"
         {% endif %}>
-        <a href="/projects/create/" data-toggle='tooltip' data-placement='bottom' title='Create'> <span class='glyphicon glyphicon-plus'></span> </a>
+        <a href="{% url 'create_project_variables' %}" data-toggle='tooltip' data-placement='bottom' title='Genereate Variables'> <span class='glyphicon glyphicon-download'></span> </a>
         </li>
         <li {% if submenu == "edit" %}
         class="active"
@@ -33,6 +33,7 @@
     <br>
 </div>
 {% if submenu == "find" %}
+<!-- FIND -->
 <form action="form aqui" method="post">
     <div class="container">
         <div class="input-group">
@@ -44,10 +45,16 @@
         <!-- /input-group -->
     </div>
     {% endif %}
-    {% if submenu == "create" %}
+    {{ submenu }}
+    {% if submenu == "variables" %}
+
+    <!-- variables -->
     {% if cloud_id %}
+    <!-- cloud_id -->
     {% if cloud_id == "2" %}
+    <!-- cloud_id 2-->
     {% if cloud_region %}
+    <!-- cloud_region -->
     <div class="alert alert-info" role="alert"> Please, configure your project.</div>
     <form action="/projects/create/form" method="post">
         {% csrf_token %}
@@ -183,7 +190,7 @@
     <tbody>
         {% for region in regions %}
         <tr>
-            <td><a href="/projects/create/{{cloud_id}}/region/{{region.1}}/">{{region.0}}</a></td>
+            <td><a href="{% url 'create_project_id_variables' %}/{{cloud_id}}/region/{{region.1}}/">{{region.0}}</a></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -196,9 +203,9 @@
 <table class="table">
     <tbody>
         <tr>
-            <td><a href="/projects/create/1"><img src="{% static "logos/aws.png" %}" alt="AWS"  style="width:300px;height:140px;"/></a></td>
-            <td><a href="/projects/create/2"><img src="{% static "logos/Azure.png" %}" alt="AZURE"  style="width:300px;height:200px;"/></a></td>
-            <td><a href="/projects/create/3"><img src="{% static "logos/google.png" %}" alt="AZURE"  style="width:300px;height:100px;"/></a></td>
+            <td><a href="{% url 'create_project_id_variables' %}/1"><img src="{% static "logos/aws.png" %}" alt="AWS"  style="width:300px;height:140px;"/></a></td>
+            <td><a href="{% url 'create_project_id_variables' %}/2"><img src="{% static "logos/Azure.png" %}" alt="AZURE"  style="width:300px;height:200px;"/></a></td>
+            <td><a href="{% url 'create_project_id_variables' %}/3"><img src="{% static "logos/google.png" %}" alt="AZURE"  style="width:300px;height:100px;"/></a></td>
         </tr>
     </tbody>
 </table>
