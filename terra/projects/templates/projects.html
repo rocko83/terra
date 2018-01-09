@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
 {% load static %}
-<!--
-    {{ projects.nome }} <br>
-    {{project_id}}
-    {% for names in projects %}
-    {{ names.nome }}
-     {% endfor %}<br> -->
 <div class="container-fluid">
     <ul class="nav nav-tabs">
         <li {% if submenu == "find" %}
@@ -44,9 +38,9 @@
         </div>
         <!-- /input-group -->
     </div>
-    {% endif %}
-    {{ submenu }}
-    {% if submenu == "variables" %}
+{% endif %}
+{{ submenu }}
+{% if submenu == "variables" %}
 
     <!-- variables -->
     {% if cloud_id %}
@@ -190,7 +184,8 @@
     <tbody>
         {% for region in regions %}
         <tr>
-            <td><a href="{% url 'create_project_id_variables' %}/{{cloud_id}}/region/{{region.1}}/">{{region.0}}</a></td>
+            <td><a href="{% url 'create_project_id_variables' cloud_id as azure_cloud %}{{ azure_cloud }}/region/{{region.1}}">{{region.0}}</a></td>
+            {#<td><a href="{% url 'create_project_id_variables' cloud_id %}/{{cloud_id}}/region/{{region.1}}/">{{region.0}}</a></td>#}
         </tr>
         {% endfor %}
     </tbody>
@@ -203,9 +198,9 @@
 <table class="table">
     <tbody>
         <tr>
-            <td><a href="{% url 'create_project_id_variables' %}/1"><img src="{% static "logos/aws.png" %}" alt="AWS"  style="width:300px;height:140px;"/></a></td>
-            <td><a href="{% url 'create_project_id_variables' %}/2"><img src="{% static "logos/Azure.png" %}" alt="AZURE"  style="width:300px;height:200px;"/></a></td>
-            <td><a href="{% url 'create_project_id_variables' %}/3"><img src="{% static "logos/google.png" %}" alt="AZURE"  style="width:300px;height:100px;"/></a></td>
+            <td><a href="{% url 'create_project_id_variables' 1 %}"><img src="{% static "logos/aws.png" %}" alt="AWS"  style="width:300px;height:140px;"/></a></td>
+            <td><a href="{% url 'create_project_id_variables' 2 %}"><img src="{% static "logos/Azure.png" %}" alt="AZURE"  style="width:300px;height:200px;"/></a></td>
+            <td><a href="{% url 'create_project_id_variables' 3 %}"><img src="{% static "logos/google.png" %}" alt="AZURE"  style="width:300px;height:100px;"/></a></td>
         </tr>
     </tbody>
 </table>

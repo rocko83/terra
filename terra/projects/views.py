@@ -11,24 +11,23 @@ from django.shortcuts import HttpResponseRedirect
 
 # Create your views here.
 def open_project(request,project_id):
-    #this.project_id = project_id
     return render(request, 'projects.html',{'menu':'project','submenu':'open'})
-    #return render(request, 'index.html',{'projects': Projects.objects.all(),'project_id': project_id })
+
 def index(request):
-    #this.project_id = project_id
     return render(request,'index.html',{'menu':'home'})
+
 def create_project_variables(request):
-    #this.project_id = project_id
     return render(request,'projects.html',{'menu':'project','submenu':'variables'})
+
 def project(request):
-    #this.project_id = project_id
     return render(request,'projects.html',{'menu':'project','submenu':'find'})
+
 def edit_project(request):
-    #this.project_id = project_id
     return render(request,'projects.html',{'menu':'project','submenu':'edit'})
+
 def delete_project(request):
-    #this.project_id = project_id
     return render(request,'projects.html',{'menu':'project','submenu':'delete'})
+
 def create_project_id_variables(request,cloud_id):
     if cloud_id == "2":
         credenciais = Config("/home/damato/projetos/dados.json")
@@ -39,6 +38,7 @@ def create_project_id_variables(request,cloud_id):
     else:
         return render(request, 'projects.html',
                       {'menu': 'project', 'submenu': 'variables', 'cloud_id': cloud_id})
+
 def create_project_region_variables(request,cloud_id,cloud_region):
     if cloud_id == "2":
         models = Config("/home/damato/projetos/git/rocko83/TerraStandard/terra/src/terraform_models.json")
