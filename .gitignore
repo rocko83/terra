@@ -7,3 +7,9 @@ bootstrap/
 connectedin/
 terra/db.sqlite3
 terra/db.sqlite3.bkp
+terra/projects/__pycache__/
+terra/projects/migrations/__pycache__/
+terra/src/__pycache__/
+terra/terra/__pycache__/
+pip-selfcheck.json
+terra/db.sqlite3
