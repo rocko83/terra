@@ -9,7 +9,7 @@ from projects.views import open_project
 from projects.views import edit_project
 from projects.views import delete_project
 from projects.views import get_form_create_variables
-from projects.views import projects_main
+#from projects.views import projects_main
 from projects.views import projects_find
 '''from projects.views import handler404
 from projects.views import handler500'''
@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^projects/variables/form$', get_form_create_variables, name='get_form_create_variables'),
     #url(r'^perfis/(?P<perfil_id>\d+)/convidar$', views.convidar, name='convidar'),
     #url(r'^convite/(?P<convite_id>\d+)/aceitar$', views.aceitar, name='aceitar'),
-    url(r'projectsmain/$',projects_main,name='projects_main'),
+    url(r'projectsmain/$',projects_find,name='projects_main'),
     url(r'projectsmain/find$',projects_find,name='projects_find')
 ]
 '''handler404 = handler404

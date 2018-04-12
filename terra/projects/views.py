@@ -28,8 +28,8 @@ def edit_project(request):
 
 def delete_project(request):
     return render(request,'projects.html',{'menu':'project','submenu':'delete'})
-def projects_main(request):
-    return render(request,'projects_main.html',{'menu':'project','submenu':'find'})
+#def projects_main(request):
+#    return render(request,'projects_main.html',{'menu':'project','submenu':'find'})
 def projects_find(request):
     projects = []
     for dados in Projects.objects.all():
