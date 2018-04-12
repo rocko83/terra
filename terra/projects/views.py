@@ -8,6 +8,7 @@ from src.azure import Azclass as Azclass
 from src.config import Config
 from .forms import NameForm
 from django.shortcuts import HttpResponseRedirect
+from .models import Projects
 
 # Create your views here.
 def open_project(request,project_id):
@@ -27,6 +28,21 @@ def edit_project(request):
 
 def delete_project(request):
     return render(request,'projects.html',{'menu':'project','submenu':'delete'})
+def projects_main(request):
+    return render(request,'projects_main.html',{'menu':'project','submenu':'find'})
+def projects_find(request):
+    projects = []
+    for dados in Projects.objects.all():
+        array2 = []
+        array2.append(dados.name)
+        array2.append(dados.filedata)
+        array2.append(dados.creation)
+        array2.append(dados.cloud_id)
+        array2.append(dados.id)
+        projects.append(array2)
+
+
+    return render(request,'projects_find.html',{'menu':'project','submenu':'find','projects':projects})
 
 def create_project_id_variables(request,cloud_id):
     if cloud_id == "2":

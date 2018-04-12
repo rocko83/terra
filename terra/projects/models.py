@@ -6,3 +6,4 @@ class Projects(models.Model):
     filedata = models.CharField(max_length=255, null=True)
     creation = models.DateField()
     cloud_id = models.IntegerField()
+    id = models.AutoField(primary_key=True)

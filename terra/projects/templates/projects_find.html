@@ -1,0 +1,47 @@
+{% extends "projects_main.html" %}
+{% block project_main %}
+{% if submenu == "find" %}
+<!-- FIND -->
+<form action="form aqui" method="post">
+    <div class="container">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search project" name="SEARCH_PROJECT">
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="button">SEARCH</button>
+            </span>
+        </div>
+        <!-- /input-group -->
+    </div>
+    <table class="table">
+    <tbody>
+        <tr>
+
+        </tr>
+    </tbody>
+    </table>
+    <table class="table table-striped table-hover table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Json PATH</th>
+                    <th>Creation Data</th>
+                    <th>Cloud ID</th>
+                    <th>Cloud ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <th><input type="radio" name="subnet" value="{{ project.0 }}" checked>{{ project.0 }}<br></th>
+                    <td>{{ project.1 }}</td>
+                    <td>{{ project.2 }}</td>
+                    <td>{{ project.3 }}</td>
+                    <td>{{ project.4 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+{% endif %}
+{% endblock %}
