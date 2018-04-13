@@ -2,10 +2,10 @@
 {% block project_main %}
 {% if submenu == "find" %}
 <!-- FIND -->
-<form action="form aqui" method="post">
+<form action="{% url 'projects_create_form'  %}" method="post">
     <div class="container">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search project" name="SEARCH_PROJECT">
+            <input type="text" class="form-control" placeholder="Search project" name="SEARCH">
             <span class="input-group-btn">
             <button class="btn btn-default" type="button">SEARCH</button>
             </span>

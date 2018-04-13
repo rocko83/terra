@@ -11,6 +11,7 @@ from projects.views import delete_project
 from projects.views import get_form_create_variables
 #from projects.views import projects_main
 from projects.views import projects_find
+import projects.views as project_view
 '''from projects.views import handler404
 from projects.views import handler500'''
 #import project.views
@@ -27,11 +28,12 @@ urlpatterns = [
     url(r'^projects/variables/(?P<cloud_id>\d+)/region/(?P<cloud_region>[\w\-]+)/$', create_project_region_variables,
         name='create_project_region_variables'),
     url(r'^projects/find/$', project, name='project'),
-    url(r'^projects/variables/form$', get_form_create_variables, name='get_form_create_variables'),
+    url(r'^projects/create/form$', get_form_create_variables, name='get_form_create_variables'),
     #url(r'^perfis/(?P<perfil_id>\d+)/convidar$', views.convidar, name='convidar'),
     #url(r'^convite/(?P<convite_id>\d+)/aceitar$', views.aceitar, name='aceitar'),
     url(r'projectsmain/$',projects_find,name='projects_main'),
-    url(r'projectsmain/find$',projects_find,name='projects_find')
+    url(r'projectsmain/find$',projects_find,name='projects_find'),
+    url(r'^projectsmain/create/form',project_view.projects_create_form,name='projects_create_form')
 ]
 '''handler404 = handler404
 handler500 = handler500'''
