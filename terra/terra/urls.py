@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 import projects.urls as projects_urls
+from caosmonkey import urls as caosUrls
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(projects_urls)),
-    #url(r'^', include(usuarios_urls))
+    url(r'^', include(caosUrls)),
 ]

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<div class="container-fluid">
+    <ul class="nav nav-tabs">
+        <li {% if submenu == "find" %}
+        class="active"
+        {% endif %}>
+        <a href="{% url 'caosmain'  %}" data-toggle='tooltip' data-placement='bottom' title='Find'> <span class='glyphicon glyphicon-search'></span> </a>
+        </li>
+        <li {% if submenu == "variables" %}
+        class="active"
+        {% endif %}>
+        <a href="{% url 'caosmain'  %}" data-toggle='tooltip' data-placement='bottom' title='Genereate Variables'> <span class='glyphicon glyphicon-download'></span> </a>
+        </li>
+        <li {% if submenu == "edit" %}
+        class="active"
+        {% endif %}>
+        <a href="{% url 'caosmain'  %}" data-toggle='tooltip' data-placement='bottom' title='Edit'> <span class='glyphicon glyphicon-pencil'></span>  </a>
+        </li>
+        <li {% if submenu == "delete" %}
+        class="active"
+        {% endif %}>
+        <a href="{% url 'caosmain'  %}" data-toggle='tooltip' data-placement='bottom' title='Delete'><span class='glyphicon glyphicon-trash'></span></a>
+        </li>
+    </ul>
+    <br>
+</div>
+
+{% endblock %}

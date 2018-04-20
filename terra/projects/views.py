@@ -10,6 +10,9 @@ from .forms import NameForm
 from django.shortcuts import HttpResponseRedirect
 from .models import Projects
 configjson_file="/home/damato/projetos/dados.json"
+envVars = Config(configjson_file)
+envTerraConfigPath=envVars.getDados("CONFIG_TERRAFORM")
+envK8sConfigPath=envVars.getDados("CONFIG_K8S")
 # Create your views here.
 def open_project(request,project_id):
     return render(request, 'projects.html',{'menu':'project','submenu':'open'})
@@ -28,8 +31,8 @@ def edit_project(request):
 
 def delete_project(request):
     return render(request,'projects.html',{'menu':'project','submenu':'delete'})
-#def projects_main(request):
-#    return render(request,'projects_main.html',{'menu':'project','submenu':'find'})
+def projects_main(request):
+    return render(request,'projects_main.html',{'menu':'project','submenu':'find'})
 def projects_find(request):
     projects = []
     for dados in Projects.objects.all():
@@ -46,7 +49,7 @@ def projects_find(request):
 
 def create_project_id_variables(request,cloud_id):
     if cloud_id == "2":
-        credenciais = Config("/home/damato/projetos/dados.json")
+        credenciais = Config(configjson_file)
         #credenciais = Config("/home/damato/projetos/dados.json")
         az = Azclass(credenciais)
         az.login()
@@ -58,8 +61,8 @@ def create_project_id_variables(request,cloud_id):
 
 def create_project_region_variables(request,cloud_id,cloud_region):
     if cloud_id == "2":
-        models = Config("/home/damato/projetos/git/rocko83/Terra/terra/terra/src/terraform_models.json")
-        credenciais = Config("/home/damato/projetos/dados.json")
+        models = Config(envTerraConfigPath)
+        credenciais = Config(configjson_file)
         az = Azclass(credenciais)
         az.login()
         retorno = az.getResourceGroup()
@@ -131,8 +134,8 @@ def get_form_create_variables(request):
 
         # check whether it's valid:
         if form.is_valid():
-            models = Config("/home/damato/projetos/git/rocko83/Terra/terra/terra/src/terraform_models.json")
-            credenciais = Config("/home/damato/projetos/dados.json")
+            models = Config(envTerraConfigPath)
+            credenciais = Config(configjson_file)
             az = Azclass(credenciais)
             az.login()
             retorno = az.getTags(models)

@@ -13,3 +13,7 @@ terra/src/__pycache__/
 terra/terra/__pycache__/
 pip-selfcheck.json
 terra/db.sqlite3
+terra/caosmonkey/__init__.py
+terra/caosmonkey/__pycache__/
+terra/k8s/__init__.py
+terra/k8s/__pycache__/
