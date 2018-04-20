@@ -25,7 +25,7 @@ SECRET_KEY = 'w(x2o)pyp(dken9l&al1^9@$ds!t___yy5me$xeihmt0p99x$h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','0.0.0.0','ns.alexandredamato.com.br']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','0.0.0.0']
 
 
 # Application definition
