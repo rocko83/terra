@@ -33,7 +33,7 @@ urlpatterns = [
     #url(r'^convite/(?P<convite_id>\d+)/aceitar$', views.aceitar, name='aceitar'),
     url(r'projectsmain/$',projects_find,name='projects_main'),
     url(r'projectsmain/find$',projects_find,name='projects_find'),
-    url(r'^projectsmain/create/form',project_view.projects_create_form,name='projects_create_form')
+    url(r'projectsmain/create/form',project_view.projects_create_form,name='projects_create_form')
 ]
 '''handler404 = handler404
 handler500 = handler500'''

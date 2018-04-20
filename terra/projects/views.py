@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from projects.models import Projects
 from src import azure
 #from config import Config as Config
@@ -122,8 +123,11 @@ def projects_create_form(request):
     if request.method == 'POST':
         form = NameForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data['search'])
-    return redirect('/projectsmain/')
+            print(form.cleaned_data['projectname'])
+    #return redirect('http://' + form.cleaned_data['projectname'])
+    return render(request, 'projects_result.html',
+                  {'menu': 'project', 'submenu': 'find', 'result':form.cleaned_data['projectname']})
+
 
 def get_form_create_variables(request):
     # if this is a POST request we need to process the form data
