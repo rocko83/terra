@@ -14,6 +14,7 @@ configjson_file="/home/damato/projetos/dados.json"
 envVars = Config(configjson_file)
 envTerraConfigPath=envVars.getDados("CONFIG_TERRAFORM")
 envK8sConfigPath=envVars.getDados("CONFIG_K8S")
+projects_create_form="Terra"
 # Create your views here.
 def open_project(request,project_id):
     return render(request, 'projects.html',{'menu':'project','submenu':'open'})
@@ -36,7 +37,7 @@ def projects_main(request):
     return render(request,'projects_main.html',{'menu':'project','submenu':'find'})
 def projects_find(request):
     projects = []
-    for dados in Projects.objects.all():
+    for dados in Projects.objects.all().order_by('-creation'):
         array2 = []
         array2.append(dados.name)
         array2.append(dados.filedata)
@@ -46,7 +47,7 @@ def projects_find(request):
         projects.append(array2)
 
 
-    return render(request,'projects_find.html',{'menu':'project','submenu':'find','projects':projects})
+    return render(request,'projects_find.html',{'menu':'project','submenu':'find','projects':projects,'title':projectName})
 
 def create_project_id_variables(request,cloud_id):
     if cloud_id == "2":
@@ -58,7 +59,7 @@ def create_project_id_variables(request,cloud_id):
         return render(request,'projects.html',{'menu':'project','submenu':'variables','cloud_id':cloud_id,'regions':retorno})
     else:
         return render(request, 'projects.html',
-                      {'menu': 'project', 'submenu': 'variables', 'cloud_id': cloud_id})
+                      {'menu': 'project', 'submenu': 'variables', 'cloud_id': cloud_id,'title':projectName})
 
 def create_project_region_variables(request,cloud_id,cloud_region):
     if cloud_id == "2":
@@ -115,10 +116,10 @@ def create_project_region_variables(request,cloud_id,cloud_region):
         return render(request, 'projects.html',
                       {'menu': 'project', 'submenu': 'variables', 'cloud_id': cloud_id, 'regions': retorno,
                        'cloud_region': cloud_region,'rgs':rgs,'vnets':vnets,'images':images,'vmsizes':vmsizes,
-                       'disktypes':disktypes,'vmtags':vmtags,'ostypes':ostypes,'auths':auths,'diskcaches':diskcaches})
+                       'disktypes':disktypes,'vmtags':vmtags,'ostypes':ostypes,'auths':auths,'diskcaches':diskcaches,'title':projectName})
     else:
         return render(request, 'projects.html',
-                      {'menu': 'project', 'submenu': 'variables', 'cloud_id': cloud_id})
+                      {'menu': 'project', 'submenu': 'variables', 'cloud_id': cloud_id,'title':'TerraStandard'})
 def projects_create_form(request):
     if request.method == 'POST':
         form = NameForm(request.POST)
@@ -126,7 +127,7 @@ def projects_create_form(request):
             print(form.cleaned_data['projectname'])
     #return redirect('http://' + form.cleaned_data['projectname'])
     return render(request, 'projects_result.html',
-                  {'menu': 'project', 'submenu': 'find', 'result':form.cleaned_data['projectname']})
+                  {'menu': 'project', 'submenu': 'find', 'result':form.cleaned_data['projectname'],'title':projectName})
 
 
 def get_form_create_variables(request):
@@ -161,7 +162,7 @@ def get_form_create_variables(request):
             for tag in vmtags:
                 tags[tag] = form.data[tag]
 
-        return render(request, 'teste.html', {'form': formdata,'tags':tags})
+        return render(request, 'teste.html', {'form': formdata,'tags':tags,'title':projectName})
 
 def get_form_create2(request):
     # if this is a POST request we need to process the form data
@@ -179,7 +180,7 @@ def get_form_create2(request):
     else:
         form = NameForm()
 
-    return render(request, 'name.html', {'form': form})
+    return render(request, 'name.html', {'form': form,'title':projectName})
 '''def handler404(request):
     return render(request, '404.html', status=404)
 

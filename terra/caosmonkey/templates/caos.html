@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block body %}
+<h1>{{ title }} </h1>
 <div class="container-fluid">
     <ul class="nav nav-tabs">
         <li {% if submenu == "find" %}
         class="active"
         {% endif %}>
-        <a href="{% url 'caosmain'  %}" data-toggle='tooltip' data-placement='bottom' title='Find'> <span class='glyphicon glyphicon-search'></span> </a>
+        <a href="{% url 'caosmain'  %}" data-toggle='tooltip' data-placement='bottom' title='Find'> <span class='glyphicon glyphicon-search'></span></a>
         </li>
         <li {% if submenu == "variables" %}
         class="active"
@@ -27,4 +28,6 @@
     <br>
 </div>
 
+{% block caos_main %}
+{% endblock %}
 {% endblock %}
