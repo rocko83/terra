@@ -14,7 +14,7 @@ configjson_file="/home/damato/projetos/dados.json"
 envVars = Config(configjson_file)
 envTerraConfigPath=envVars.getDados("CONFIG_TERRAFORM")
 envK8sConfigPath=envVars.getDados("CONFIG_K8S")
-projects_create_form="Terra"
+projectName="Terra"
 # Create your views here.
 def open_project(request,project_id):
     return render(request, 'projects.html',{'menu':'project','submenu':'open'})
