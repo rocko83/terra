@@ -12,7 +12,7 @@ def caosmain(request):
         if form.is_valid():
             search = form.cleaned_data['projectname']
             try:
-                results = Caosmonkey.objects.get(name__contains=search)
+                results = Caosmonkey.objects.all().filter(name__contains=search)
                 return render(request, 'caos_find.html',
                               {'menu': 'project', 'submenu': 'find', 'results': results,
                                'title': projectName, 'method': 'post'})
