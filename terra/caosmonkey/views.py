@@ -13,14 +13,29 @@ def caosmain(request):
             search = form.cleaned_data['projectname']
             try:
                 results = Caosmonkey.objects.all().filter(name__contains=search)
+                if results.exists():
+                    RC=True
+                    return render(request, 'caos_find.html',
+                                  {'menu': 'project', 'submenu': 'find', 'results': results,
+                                   'title': projectName, 'method': 'post','RC':RC})
+                else:
+                    RC = False
+                    results = []
+                    results.append("Project not found")
+                    results.append(search)
+                    return render(request, 'caos_find.html',
+                                  {'menu': 'project', 'submenu': 'find', 'results': results,
+                                   'title': projectName, 'method': 'post', 'RC': RC,'form':form})
+
+            except:
+
+                RC = False
+                results = []
+                results.append("Project not found")
+                results.append(search)
                 return render(request, 'caos_find.html',
                               {'menu': 'project', 'submenu': 'find', 'results': results,
-                               'title': projectName, 'method': 'post'})
-            except:
-                print(search + " nao existe")
-            return render(request, 'caos_find.html',
-                          {'menu': 'project', 'submenu': 'find',
-                           'title': projectName, 'method': 'post'})
+                               'title': projectName, 'method': 'post', 'RC': RC,'form':form})
     else:
         form = CaosProject()
         projects = []
@@ -35,3 +50,31 @@ def caosmain(request):
 
         return render(request, 'caos_find.html',
                       {'menu': 'caos', 'submenu': 'find', 'method': 'web', 'title': projectName, 'form': form,'projects':projects})
+def caos_create(request):
+    if request.method == 'POST':
+        form = CaosProject(request.POST)
+        if form.is_valid():
+
+            search = form.cleaned_data['projectname']
+            try:
+                results = Caosmonkey.objects.all().filter(name__contains=search)
+                if results.exists():
+                    RC = True
+                    results = []
+                    results.append("Project name unavailable")
+
+                else:
+                    RC = False
+                    results = []
+                    results.append("Project name available")
+
+
+            except:
+                RC = False
+                results = []
+                results.append("Project name available")
+
+            results.append(search)
+            return render(request, 'caos_create.html',
+                          {'menu': 'project', 'submenu': 'find', 'results': results,
+                           'title': projectName, 'method': 'post', 'RC': RC,'form':form})

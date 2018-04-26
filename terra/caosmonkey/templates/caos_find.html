@@ -1,7 +1,6 @@
 {% extends "caos.html" %}
 {% block caos_main %}
-
-{% if method == "web" %}
+{% if method == "web" %} <!-- View with the find menu and top latest projects-->
 
 <div class="table table-striped table-hover table-condensed table-responsive">
     <form action="{% url 'caosmain' %}" method="post">
@@ -45,6 +44,8 @@
 {% endif %}
 
 {% if method == "post" %}
+{% if RC == True %} <!-- Return of the find with valid projects on the result -->
+<h2> Projects  </h2>
 <table class="table table-striped table-hover table-condensed table-responsive">
             <thead>
                 <tr>
@@ -72,8 +73,29 @@
                 {% endfor %}
             </tbody>
         </table>
+{% endif %}
+{{ RC }}
+{% if RC == False %} <!-- Return of the find where no projects were found -->
+<h1>
+    <p class="bg-danger">{{ results.0 }}<a href="{% url 'caosmain' %}" >
+    <button type="button" class="btn btn-warning">Try again</button>
+</a></p>
+</h1>
 
 
+<h2>
+    <p class="bg-success">Would you like to create project "{{ results.1 }}"?</p>
+</h2>
+<div class="table table-striped table-hover table-condensed table-responsive">
+    <form action="{% url 'caoscreate' %}" method="post">
+        {% csrf_token %}
+        {{ form.projectname.errors }}
+        {{ form.projectname.label_tag }}
+        {{ form.projectname }}
+    <button type="submit" class="btn btn-success">Create</button>
+    </form>
+</div>
+{% endif %}
 
 {% endif %}
 {% endblock %}
