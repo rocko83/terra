@@ -167,3 +167,12 @@ class Azclass:
         except ValueError:
             print("Fail to get default credentials for virtual machine")
             return  False
+    def getVmsList(self,rgname):
+        try:
+            vms = azurerm.list_vms(self.access_token,self.subscription,rgname)
+            print(dir(vms))
+            for vm in vms:
+                print(dir(vm))
+        except ValueError:
+            print("Fail to get list of vms")
+            return False

@@ -16,10 +16,8 @@ tf = Terraform("azure",models)
 az.login()
 
 
-retorno = az.getRegion()
+retorno = az.getVmsList("")
 if retorno == False:
     print("False")
 else:
-    for data in retorno:
-        print(data)
-retorno = az.getVmSize("brazilsouth")
+    print(dir(retorno))
